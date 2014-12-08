@@ -280,13 +280,8 @@ public class ViewController implements Initializable, ViewInterface {
 		durationLabel.setText(TimeFormatter.formatMilliseconds(ms));
 	}
 
-	private void setShuffleFX(boolean shuffle) {
-		shuffleToggleButton.setSelected(shuffle);
-		if (shuffle) {
-			ListItemManager.getInstance().setPlayBackMode(PlayBackMode.SHUFFLE);
-		} else {
-			ListItemManager.getInstance().setPlayBackMode(PlayBackMode.NORMAL);
-		}
+	private void setPlayBackModeFX(PlayBackMode mode) {
+	    ListItemManager.getInstance().setPlayBackMode(mode);
 	}
 
 	public Slider getDurationSlider() {
@@ -493,13 +488,20 @@ public class ViewController implements Initializable, ViewInterface {
 		shuffleToggleButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if (shuffleToggleButton.isSelected()) {
-					logic.event_playbackmode_shuffle();
-					ListItemManager.getInstance().setPlayBackMode(PlayBackMode.SHUFFLE);
-					return;
-				}
-				ListItemManager.getInstance().setPlayBackMode(PlayBackMode.NORMAL);
-				logic.event_playbackmode_normal();
+			    switch (ListItemManager.getInstance().getPlayBackMode()) {
+			        case NORMAL:
+			            logic.event_playbackmode_shuffle();
+                        ListItemManager.getInstance().setPlayBackMode(PlayBackMode.SHUFFLE);
+			            break;
+			        case SHUFFLE:
+			            ListItemManager.getInstance().setPlayBackMode(PlayBackMode.REPEAT);
+		                logic.event_playbackmode_repeat();
+                        break;
+			        case REPEAT:
+			            ListItemManager.getInstance().setPlayBackMode(PlayBackMode.NORMAL);
+		                logic.event_playbackmode_normal();
+                        break;
+			    }
 			}
 		});
 
@@ -790,11 +792,7 @@ public class ViewController implements Initializable, ViewInterface {
 	public void setPlaybackMode(final PlayBackMode mode) {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				if (mode == PlayBackMode.NORMAL) {
-					setShuffleFX(false);
-				} else if (mode == PlayBackMode.SHUFFLE) {
-					setShuffleFX(true);
-				}
+			    setPlayBackModeFX(mode);
 				ListItemManager.getInstance().setPlayBackMode(mode);
 			}
 		});
@@ -1700,6 +1698,9 @@ public class ViewController implements Initializable, ViewInterface {
 					nextIndex = (nextIndex + 1) % this.currentListView.getItems().size();
 				}
 				break;
+			case REPEAT:
+                nextIndex = oldIndex;
+                break;
 			}
 			return nextIndex;
 		}
