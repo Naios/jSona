@@ -281,15 +281,12 @@ public class ViewController implements Initializable, ViewInterface {
 
 	    switch (mode) {
 	        case NORMAL:
-	            System.out.println("modeNormalImage");
 	            modeButtonImage.setImage(modeNormalImage);
 	            break;
 	        case SHUFFLE:
-	            System.out.println("modeShuffleImage");
 	            modeButtonImage.setImage(modeShuffleImage);
                 break;
 	        case REPEAT:
-	            System.out.println("modeRepeatImage");
 	            modeButtonImage.setImage(modeRepeatImage);
                 break;
 	    }
@@ -504,15 +501,15 @@ public class ViewController implements Initializable, ViewInterface {
 			public void handle(ActionEvent e) {
 			    switch (ListItemManager.getInstance().getPlayBackMode()) {
 			        case NORMAL:
+                        setPlaybackMode(PlayBackMode.SHUFFLE);
 			            logic.event_playbackmode_shuffle();
-                        ListItemManager.getInstance().setPlayBackMode(PlayBackMode.SHUFFLE);
 			            break;
 			        case SHUFFLE:
-			            ListItemManager.getInstance().setPlayBackMode(PlayBackMode.REPEAT);
+			            setPlaybackMode(PlayBackMode.REPEAT);
 		                logic.event_playbackmode_repeat();
                         break;
 			        case REPEAT:
-			            ListItemManager.getInstance().setPlayBackMode(PlayBackMode.NORMAL);
+			            setPlaybackMode(PlayBackMode.NORMAL);;
 		                logic.event_playbackmode_normal();
                         break;
 			    }
