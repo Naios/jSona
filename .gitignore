@@ -1,0 +1,8 @@
+# jSona
+cache/
+
+# Eclipse IDE
+bin/
+.settings/
+.classpath
+.project
