@@ -138,7 +138,7 @@ public class ViewController implements Initializable, ViewInterface {
 	private ToggleButton shuffleToggleButton;
 
 	@FXML
-	private Image playImage, pauseImage, maximizeImage, reMaximizeImage;
+	private Image playImage, pauseImage, maximizeImage, reMaximizeImage, modeNomrmalImage, modeShuffleImage, modeRepeatImage;
 
 	@FXML
 	private AnchorPane imageContainer;
@@ -356,18 +356,21 @@ public class ViewController implements Initializable, ViewInterface {
 	public void init(final LogicInterfaceFX logic, String theme) {
 		// Setup theme
 		String themePath = "/de/roth/jsona/view/themes/" + theme;
-		
+
 		// Images
 		this.playImage = new Image(themePath + "/" + "play.png");
 		this.pauseImage = new Image(themePath + "/" + "pause.png");
 		this.playButtonImage.setImage(playImage);
 		this.nextButtonImage.setImage(new Image(themePath + "/" + "next.png"));
 		this.prevButtonImage.setImage(new Image(themePath + "/" + "prev.png"));
-		this.shuffleToggleButtonImage.setImage(new Image(themePath + "/" + "shuffle.png"));
 		this.artistImage.setImage(new Image(themePath + "/" + "icon.png"));
 		this.maximizeImage = new Image(themePath + "/" + "maximize_window.png");
 		this.reMaximizeImage = new Image(themePath + "/" + "remaximize_window.png");
-		
+		this.modeNomrmalImage = new Image(themePath + "/" + "mode_normal.png");
+		this.modeShuffleImage = new Image(themePath + "/" + "mode_shuffle.png");
+		this.modeRepeatImage = new Image(themePath + "/" + "mode_repeat.png");
+
+		this.shuffleToggleButtonImage.setImage(modeNomrmalImage);
 
 		if (logic.equalizer_available()) {
 			this.equalizerIcon.setImage(new Image(themePath + "/" + "equalizer.png"));
